@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.aayush.snakegame.Snake_Start"
+    android:background="@drawable/sn">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Snake Game"
+        android:textSize="60dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_orange_dark"
+        android:fontFamily="casual"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        />
+
+    <Button
+        android:id="@+id/playbutton"
+        android:layout_width="250dp"
+        android:layout_height="80dp"
+        android:text="Play"
+        android:textSize="30dp"
+        android:fontFamily="casual"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/textView"
+        android:layout_marginTop="180dp"
+        android:background="@drawable/button_effects"
+        android:textColor="@android:color/white"
+        />
+    <Button
+        android:id="@+id/creditButton"
+        android:layout_width="250dp"
+        android:layout_height="80dp"
+        android:text="Credits"
+        android:textSize="30dp"
+        android:fontFamily="casual"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/playbutton"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/button_effects"
+        android:textColor="@android:color/white"/>
+
+
+</RelativeLayout>

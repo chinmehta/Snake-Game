@@ -1,0 +1,270 @@
+<html>
+
+<head>
+    <style>
+     body {
+  padding:10px;
+  margin:0px;
+
+}
+button {
+
+    height: 20px;
+    width: 100px;
+    line-height: 10px;
+    vertical-align: middle;
+    padding: 24px 0px;
+    font-weight: bold;
+    background: red;
+    border: 5px solid black;
+    border-radius:5px;
+
+}
+button:hover {
+  background: lightsalmon;
+}
+
+button1 {
+
+
+    background-image: url(icon.png);
+    background-repeat:no-repeat;
+    padding:5px 10px 0px 10px;
+
+}
+
+
+
+    </style></head>
+<body>
+<div style="width:300px;margin :auto;">
+    <canvas id="myCanvas" width="300" height="350" style="background-image: url(jungle.jpg); background-size:cover;border:2px solid black;">
+    </canvas>
+</div>
+<script>
+
+            //Upbutton
+var button = document.createElement("button");
+button.innerHTML = "Up";
+
+button.style.marginLeft="100px";
+button.style.marginRight="100px";
+button.style.display="block";
+
+// 2. Append somewhere
+var body = document.getElementsByTagName("body")[0];
+body.appendChild(button);
+
+// 3. Add event handler
+button.addEventListener ("click", function() {
+  dir = "up";
+});
+
+///LeftButton
+var button = document.createElement("button");
+button.innerHTML = "Left";
+button.style.marginLeft="40px";
+
+// 2. Append somewhere
+var body = document.getElementsByTagName("body")[0];
+body.appendChild(button);
+
+// 3. Add event handler
+button.addEventListener ("click", function() {
+dir = "left";
+});
+
+///RightButton
+var button = document.createElement("button");
+button.innerHTML = "Right";
+
+button.style.marginLeft="30px";
+
+
+// 2. Append somewhere
+var body = document.getElementsByTagName("body")[0];
+body.appendChild(button);
+
+// 3. Add event handler
+button.addEventListener ("click", function() {
+dir = "right";
+});
+
+///DownButton
+var button = document.createElement("button");
+button.innerHTML = "Down";
+
+
+button.style.marginLeft="100px";
+
+
+// 2. Append somewhere
+var body = document.getElementsByTagName("body")[0];
+body.appendChild(button);
+
+// 3. Add event handler
+button.addEventListener ("click", function() {
+dir = "down";
+});
+
+
+
+
+var button = document.createElement("button1");
+
+
+button.style.marginLeft="100px";
+
+// 2. Append somewhere
+var body = document.getElementsByTagName("body")[0];
+body.appendChild(button);
+
+// 3. Add event handler
+button.addEventListener ("click", function() {
+  init();
+});
+
+/////////////////////////////
+
+
+
+
+
+
+        var canvas=document.getElementById("myCanvas");
+            var ctx=canvas.getContext("2d");
+            var dir,score,balls,food;
+            var speed=100;
+
+            //initialisation
+            function init(){ //1
+                dir='right';
+                score=0;
+                balls=[
+                    {x:40, y:40},
+                    {x:60, y:40},
+                    {x:80, y:40}
+
+                ];
+                createFood();
+                 }
+
+            function createFood(){
+
+                food={x:Math.floor(Math.random()*12), y:Math.floor(Math.random()*16)};
+
+                for(var i=0;i<balls.length;i++){
+
+                    var ball=balls[i];
+                    if(food.x== ball.x&& food.y == ball.y){
+                       createFood();
+
+                    }
+            }
+
+            }
+            init();
+             ///Listner for Keyboard Inputs
+   //4
+            document.addEventListener("keydown",function(e){
+            var keyCode = e.keyCode;
+            if(keyCode==37 && dir!='right'){
+                dir='left';
+            }
+            if(keyCode==38 && dir!='down'){
+                dir='up';
+            }
+               if(keyCode==39 && dir!='left'){
+                dir='right';
+            }
+            if(keyCode==40 && dir!='up'){
+                dir='down';
+            }
+             });
+
+
+            function add(){      //3
+                var lastBall=balls[balls.length-1];
+                if(dir=='right'){
+                    balls.push({x:lastBall.x +20, y:lastBall.y});
+                    }
+                if(dir=='down'){
+                    balls.push({x:lastBall.x , y:lastBall.y+20});
+                     }
+                if(dir=='left'){
+                    balls.push({x:lastBall.x-20 , y:lastBall.y});
+                     }
+                if(dir=='up'){
+                    balls.push({x:lastBall.x , y:lastBall.y-20});
+                     }
+
+            }
+
+
+            function ani(){  //2
+                ctx.clearRect(0,0,308,358);
+                balls.shift();
+                add();
+                var lastBall= balls[balls.length-1];
+
+                if(lastBall.x == food.x*20 && lastBall.y== food.y*20){
+                    score += 1;
+                    add();
+
+                    createFood();
+
+
+                }
+
+
+
+
+                for(var i=0;i<balls.length;i++)
+                    {
+                        ball=balls[i];
+
+                        if(i==balls.length-1)
+                            {
+                                 ctx.fillStyle="lightgreen";
+                            }
+                        else{
+                             ctx.fillStyle="red";
+                        }
+
+                        if(ball.x>280)//from one wall to another
+                            {
+                                ball.x=0;
+                            }
+                        if(ball.x<0)
+                            {ball.x=280;
+                            }
+                        if(ball.y>330)
+                            {ball.y=0;
+                            }
+                        if(ball.y<0)
+                            {ball.y=330;
+                            }
+
+                        if(ball.x==lastBall.x && ball.y==lastBall.y && i<balls.length-2){
+
+                            alert("Game Over, Your Score is "+score);
+                            init();
+
+                        }
+
+                        ctx.fillRect(ball.x,ball.y,19,19);
+                    }
+
+                ctx.fillRect(food.x*20,food.y*20,19,19);
+                 ctx.fillText("Score " +score,10,70);
+                ctx.font = "30px Arial";
+
+
+            }
+            setInterval(ani,speed );
+
+        </script>
+
+</body>
+
+</html>
